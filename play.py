@@ -4,6 +4,18 @@ import random
 from collections import deque
 
 
+# Let's make it colorful!
+class Colors:
+    RED = '\033[91m'
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    BLUE = '\033[94m'
+    MAGENTA = '\033[95m'
+    CYAN = '\033[96m'
+    WHITE = '\033[97m'
+    RESET = '\033[0m'
+
+
 def beats(one, two):
     """Return True if move one beats move two in rock-paper-scissors."""
     return ((one == 'rock' and two == 'scissors') or
@@ -89,22 +101,23 @@ class Game:
         """Play one round of rock-paper-scissors."""
         move1 = self.p1.move()
         move2 = self.p2.move()
-        print(f"Player 1: {move1}  Player 2: {move2}")
+        print(f"{Colors.BLUE}Player 1: {move1}  {Colors.RESET}" +
+              f"{Colors.MAGENTA}Player 2: {move2}{Colors.RESET}")
         self.update_scores(move1, move2)
-        print(self.get_scores())
+        print(f"{Colors.CYAN}{self.get_scores()}{Colors.RESET}")
         self.p1.learn(move1, move2)
         self.p2.learn(move2, move1)
 
     def play_game(self):
         """Play a three-round game."""
-        print("Game start!")
+        print(f"{Colors.GREEN}Game start!{Colors.RESET}")
         for round in range(3):
-            print(f"Round {round + 1}:")
+            print(f"{Colors.YELLOW}Round {round + 1}:{Colors.RESET}")
             self.play_round()
-        print("Game over!")
+        print(f"{Colors.GREEN}Game over!{Colors.RESET}")
         winner = max(self.scores, key=self.scores.get)
-        print(f"The winner is {'Player 1' if winner == self.p1
-                               else 'Player 2'}.")
+        win_message = "Player 1" if winner == self.p1 else "Player 2"
+        print(f"{Colors.GREEN}The winner is {win_message}.{Colors.RESET}")
 
 
 if __name__ == '__main__':
