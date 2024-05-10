@@ -3,11 +3,13 @@
 import random
 from collections import deque
 
+
 def beats(one, two):
     """Return True if move one beats move two in rock-paper-scissors."""
     return ((one == 'rock' and two == 'scissors') or
             (one == 'scissors' and two == 'paper') or
             (one == 'paper' and two == 'rock'))
+
 
 class Player:
     """Base class for a player in rock-paper-scissors game."""
@@ -23,11 +25,13 @@ class Player:
         """Learn from moves played in the round."""
         self.past_moves.append((my_move, their_move))
 
+
 class RandomPlayer(Player):
     """A player that chooses its move randomly."""
     def move(self):
         """Return a random move."""
         return random.choice(['rock', 'paper', 'scissors'])
+
 
 class HumanPlayer(Player):
     """A player that prompts human user for a move."""
@@ -39,6 +43,7 @@ class HumanPlayer(Player):
                 return choice
             print("Please enter a valid choice.")
 
+
 class ReflectPlayer(Player):
     """A player that mirrors the opponent's last move."""
     def move(self):
@@ -47,15 +52,18 @@ class ReflectPlayer(Player):
             return self.past_moves[-1][1]
         return 'rock'
 
+
 class CyclePlayer(Player):
     """A player that cycles through the moves based on the last move."""
     def move(self):
         """Determine next move based on a cycle strategy."""
-        cycle_strategy = {'rock': 'paper', 'paper': 'scissors', 'scissors': 'rock'}
+        cycle_strategy = {
+            'rock': 'paper', 'paper': 'scissors', 'scissors': 'rock'}
         if self.past_moves:
             last_move = self.past_moves[-1][0]
             return cycle_strategy[last_move]
         return 'rock'
+
 
 class Game:
     """Manage a rock-paper-scissors game between two players."""
@@ -74,7 +82,8 @@ class Game:
 
     def get_scores(self):
         """Get current scores in a formatted string."""
-        return f"Player 1: {self.scores[self.p1]}  Player 2: {self.scores[self.p2]}"
+        return (f"Player 1: {self.scores[self.p1]}  Player 2: "
+                f"{self.scores[self.p2]}")
 
     def play_round(self):
         """Play one round of rock-paper-scissors."""
@@ -94,7 +103,9 @@ class Game:
             self.play_round()
         print("Game over!")
         winner = max(self.scores, key=self.scores.get)
-        print(f"The winner is {'Player 1' if winner == self.p1 else 'Player 2'}.")
+        print(f"The winner is {'Player 1' if winner == self.p1
+                               else 'Player 2'}.")
+
 
 if __name__ == '__main__':
     game = Game(RandomPlayer(), HumanPlayer())
