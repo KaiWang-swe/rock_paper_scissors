@@ -118,16 +118,22 @@ class Game:
         print(f"{Colors.GREEN}Game over!{Colors.RESET}")
         winner = max(self.scores, key=self.scores.get)
         win_message = "Player 1" if winner == self.p1 else "Player 2"
-        print(f"{Colors.GREEN}The winner is {win_message}.{Colors.RESET}")
+        print(
+            f"{Colors.GREEN}The winner is {win_message}.{Colors.RESET}" +
+            f" With final score {Colors.RED}{self.get_scores()}{Colors.RESET}"
+              )
 
 
 if __name__ == '__main__':
     while True:
-        players = {'randomplayer': RandomPlayer(),
+        players = {'defaultplayer': Player(),
+                   'randomplayer': RandomPlayer(),
                    'reflectplayer': ReflectPlayer(),
                    'cycleplayer': CyclePlayer()}
-        choice = input("RandomPlayer, ReflectPlayer or CyclePlayer?").lower()
-        if choice in ['randomplayer', 'reflectplayer', 'cycleplayer']:
+        choice = input("DefaultPlayer, RandomPlayer,"
+                       " ReflectPlayer or CyclePlayer?").lower()
+        if choice in ['defaultplayer', 'randomplayer',
+                      'reflectplayer', 'cycleplayer']:
             chosen_player = players[choice]
             break
         print("Please enter a valid choice.")
