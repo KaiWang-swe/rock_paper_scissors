@@ -59,22 +59,23 @@ class HumanPlayer(Player):
 class ReflectPlayer(Player):
     """A player that mirrors the opponent's last move."""
     def move(self):
-        """Return the opponent's last move, default to 'rock'."""
+        """Return the opponent's last move, default to a random move."""
         if self.past_moves:
             return self.past_moves[-1][1]
-        return 'rock'
+        return random.choice(['rock', 'paper', 'scissors'])
 
 
 class CyclePlayer(Player):
     """A player that cycles through the moves based on the last move."""
     def move(self):
-        """Determine next move based on a cycle strategy."""
+        """Determine next move based on a cycle strategy,
+        default to a random move."""
         cycle_strategy = {
             'rock': 'paper', 'paper': 'scissors', 'scissors': 'rock'}
         if self.past_moves:
             last_move = self.past_moves[-1][0]
             return cycle_strategy[last_move]
-        return 'rock'
+        return random.choice(['rock', 'paper', 'scissors'])
 
 
 class Game:
@@ -121,5 +122,14 @@ class Game:
 
 
 if __name__ == '__main__':
-    game = Game(RandomPlayer(), HumanPlayer())
+    while True:
+        players = {'randomplayer': RandomPlayer(),
+                   'reflectplayer': ReflectPlayer(),
+                   'cycleplayer': CyclePlayer()}
+        choice = input("RandomPlayer, ReflectPlayer or CyclePlayer?").lower()
+        if choice in ['randomplayer', 'reflectplayer', 'cycleplayer']:
+            chosen_player = players[choice]
+            break
+        print("Please enter a valid choice.")
+    game = Game(HumanPlayer(), chosen_player)
     game.play_game()
