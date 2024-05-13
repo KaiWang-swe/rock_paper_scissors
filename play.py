@@ -109,10 +109,10 @@ class Game:
         self.p1.learn(move1, move2)
         self.p2.learn(move2, move1)
 
-    def play_game(self):
+    def play_game(self, num=3):
         """Play a three-round game."""
         print(f"{Colors.GREEN}Game start!{Colors.RESET}")
-        for round in range(3):
+        for round in range(num):
             print(f"{Colors.YELLOW}Round {round + 1}:{Colors.RESET}")
             self.play_round()
         print(f"{Colors.GREEN}Game over!{Colors.RESET}")
@@ -126,8 +126,8 @@ class Game:
                 f"\nFinal score {Colors.RED}{self.get_scores()}{Colors.RESET}"
                 )
         else:
-            print('It is a tie')
-            print(f" With final score {Colors.RED}{self.get_scores()}{Colors.RESET}")
+            print('It is a tie.')
+            print(f"Final score: {Colors.RED}{self.get_scores()}{Colors.RESET}")
 
 def play():
     while True:
