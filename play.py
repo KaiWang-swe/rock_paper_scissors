@@ -116,15 +116,20 @@ class Game:
             print(f"{Colors.YELLOW}Round {round + 1}:{Colors.RESET}")
             self.play_round()
         print(f"{Colors.GREEN}Game over!{Colors.RESET}")
-        winner = max(self.scores, key=self.scores.get)
-        win_message = "Player 1" if winner == self.p1 else "Player 2"
-        print(
-            f"{Colors.GREEN}The winner is {win_message}.{Colors.RESET}" +
-            f" With final score {Colors.RED}{self.get_scores()}{Colors.RESET}"
-              )
+        winner = max(self.scores, key=self.scores.get) if \
+        max(self.scores, key=self.scores.get) != min(self.scores, key=self.scores.get) \
+        else 'tie'
+        if winner != 'tie':
+            win_message = "Player 1" if winner == self.p1 else "Player 2"
+            print(
+                f"{Colors.GREEN}The winner is {win_message}.{Colors.RESET}" +
+                f"\nFinal score {Colors.RED}{self.get_scores()}{Colors.RESET}"
+                )
+        else:
+            print('It is a tie')
+            print(f" With final score {Colors.RED}{self.get_scores()}{Colors.RESET}")
 
-
-if __name__ == '__main__':
+def play():
     while True:
         players = {'defaultplayer': Player(),
                    'randomplayer': RandomPlayer(),
@@ -139,3 +144,6 @@ if __name__ == '__main__':
         print("Please enter a valid choice.")
     game = Game(HumanPlayer(), chosen_player)
     game.play_game()
+
+if __name__ == '__main__':
+    play()
